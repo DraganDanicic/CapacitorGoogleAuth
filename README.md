@@ -1,3 +1,7 @@
+> [!WARNING]
+> This plugin is "virtually" archived as there no way to reach the author in any medium
+> Please use: https://github.com/Cap-go/capacitor-social-login as alternative follow [**migration here**](https://github.com/Cap-go/capacitor-social-login/blob/main/MIGRATION_CODETRIX.md)
+
 <h1 align="center">CapacitorGoogleAuth</h1>
 <p align="center"><strong><code>@codetrix-studio/capacitor-google-auth</code></strong></p>
 <p align="center"><strong>CAPACITOR 6</strong></p>
@@ -8,6 +12,10 @@ Capacitor plugin for Google Auth.
 <p align="center">
 <a href="https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth"><img alt="npm" src="https://img.shields.io/npm/v/@codetrix-studio/capacitor-google-auth"></a> <a href="https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth"><img alt="npm" src="https://img.shields.io/npm/dt/@codetrix-studio/capacitor-google-auth"></a> <a href="https://www.npmjs.com/package/@codetrix-studio/capacitor-google-auth"><img alt="npm" src="https://img.shields.io/npm/dw/@codetrix-studio/capacitor-google-auth"></a> <a href="https://libraries.io/npm/@codetrix-studio%2Fcapacitor-google-auth"><img alt="Dependents (via libraries.io)" src="https://img.shields.io/librariesio/dependents/npm/@codetrix-studio/capacitor-google-auth"></a> <a href="https://packagephobia.com/result?p=@codetrix-studio/capacitor-google-auth"><img alt="install size" src="https://packagephobia.com/badge?p=@codetrix-studio/capacitor-google-auth"></a>
 </p>
+
+## Breaking change in V6
+
+In the v6 version, `clientId` in the initialize method is used in priority over other places you could set up. If before you were using this only on the web, unset it on mobile. Or set it conditionally to replicate old behavior.
 
 ## Contributions
 
@@ -143,26 +151,19 @@ or see more [CapacitorGoogleAuth-Vue3-example](https://github.com/reslear/Capaci
 2. Add **identifier** `REVERSED_CLIENT_ID` as **URL schemes** to `Info.plist` from **iOS URL scheme**<br>
    (Xcode: App - Targets/App - Info - URL Types, click plus icon)
 
-3. Set **Client ID** one of the ways:
-   1. Set in `capacitor.config.json`
-      - `iosClientId` - specific key for iOS
-      - `clientId` - or common key for Android and iOS
-   2. Download `GoogleService-Info.plist` file with `CLIENT_ID` and copy to **ios/App/App** necessarily through Xcode for indexing.
-
-plugin first use `iosClientId` if not found use `clientId` if not found use value `CLIENT_ID` from file `GoogleService-Info.plist`
+3. Set **Client ID** one of the ways (by order of importance in the plugin):
+   1. Set `clientId` in initialize method
+   2. Set `iosClientId` in `capacitor.config.json`
+   3. Set `clientId` in `capacitor.config.json`
+   4. Set `CLIENT_ID` in `GoogleService-Info.plist`
 
 ### Android
 
-Set **Client ID** :
-
-1. In `capacitor.config.json`
-
-   - `androidClientId` - specific key for Android
-   - `clientId` - or common key for Android and iOS
-
-2. or set inside your `strings.xml`
-
-plugin first use `androidClientId` if not found use `clientId` if not found use value `server_client_id` from file `strings.xml`
+Set **Client ID** (by order of importance in the plugin):
+1. Set `clientId` in initialize method
+2. Set `androidClientId` in `capacitor.config.json`
+3. Set `clientId` in `capacitor.config.json`
+4. Set `server_client_id` in `strings.xml`
 
 ```xml
 <resources>
